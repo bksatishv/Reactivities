@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 export default observer (function ActivityForm(){
     const history=useHistory();
     const {activityStore}=useStore();
-    const {selectedActivity,loadActivity,createActivity,updateActivity,loading,loadingInitial,setLoadingInitial}=activityStore;
+    const {loadActivity,createActivity,updateActivity,loading,loadingInitial}=activityStore;
     const {id}=useParams<{id:string}>();
     const [activity,setActivity]=useState( {
         id:'',
@@ -24,7 +24,6 @@ export default observer (function ActivityForm(){
 
     useEffect(()=>{
         if(id) loadActivity(id).then((activity)=>setActivity(activity!));
-        setLoadingInitial(false);
     },[id,loadActivity]);
 
     function handleSubmit(){

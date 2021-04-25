@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { history } from '../..';
 import { Activity } from '../models/activity';
 
 const sleep = (delay: number) => {
@@ -9,15 +10,18 @@ const sleep = (delay: number) => {
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
-axios.interceptors.response.use(response => {
-    return sleep(1000).then(() => {
-        return response;
-    }).catch((error) => {
-        console.log(console.error());
-        return Promise.reject(error);
-    })
-}
-);
+axios.interceptors.response.use(async response => {
+    await sleep(1000);
+    return response;
+},(error:AxiosError)=>{
+    const {data,status}=error.response!;
+    switch(status){
+        case 404:
+            history.push('/notFound');
+            break;
+    }
+    return Promise.reject();
+});
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 

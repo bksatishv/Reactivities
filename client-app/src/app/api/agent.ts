@@ -14,11 +14,14 @@ axios.interceptors.response.use(async response => {
     await sleep(1000);
     return response;
 },(error:AxiosError)=>{
-    const {data,status}=error.response!;
+    const {status}=error.response!;
     switch(status){
         case 404:
             history.push('/notFound');
             break;
+        case 400:
+                history.push('/notFound');
+                break;
     }
     return Promise.reject();
 });

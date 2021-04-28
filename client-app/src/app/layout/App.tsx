@@ -19,14 +19,17 @@ function App() {
         render={() => (
           <>
             <NavBar />
-            <Switch>
             <Container style={{ marginTop: '7em' }}>
+
+            <Switch>
               <Route exact path='/activities' component={ActivityDashboard} />
               <Route path='/activities/:id' component={ActivityDetails} />
               <Route key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
+              <Route path='/notFound' component={NotFound}/>
               <Route component={NotFound}/>
-            </Container>              
             </Switch>
+            </Container>              
+
           </>
         )}
       />
